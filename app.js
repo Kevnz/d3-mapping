@@ -1,1 +1,1 @@
-require('static-cling').cling();
+require('static-cling').cling({port: process.env.PORT || 3000 });
