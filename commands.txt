@@ -1,0 +1,12 @@
+ogr2ogr -f GeoJSON -where "ADM0_A3 IN ('GBR', 'IRL')" subunits1.json ne_10m_admin_0_map_subunits.shp
+
+ogr2ogr -f GeoJSON  -where "ISO_A2 = 'GB' AND SCALERANK < 8" places1.json ne_10m_populated_places.shp
+
+topojson --id-property SU_A3 -p name=NAME -p name -o uk.json subunits1.json places1.json
+
+
+ogr2ogr -f GeoJSON -where "ADM0_A3 IN ('NZL')" subunits.json ne_10m_admin_0_map_subunits.shp
+
+ogr2ogr -f GeoJSON  -where "ISO_A2 = 'NZ' AND SCALERANK < 6" places.json ne_10m_populated_places.shp
+
+topojson --id-property SU_A3 -p name=NAME -p name -o nz.json subunits.json places.json
