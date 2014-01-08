@@ -49,7 +49,7 @@ var g = svg.append('g').attr("width", width)
 var clickToZoom = function (e) {
   var lat = e.geometry.coordinates[1];
   var lon = e.geometry.coordinates[0];
-        //projection.center([lon, lat]);
+  //projection.center([lon, lat]);
   var centroid = path.centroid(e);
   x = centroid[0];
   y = centroid[1];
