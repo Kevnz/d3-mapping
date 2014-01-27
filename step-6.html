@@ -46,7 +46,7 @@ var svg = d3.select("body").append("svg")
     .attr("height", height);
 var g = svg.append('g').attr("width", width)
     .attr("height", height);
-var clickToZoom = function (e) {
+var clickToCenter = function (e) {
   var lat = e.geometry.coordinates[1];
   var lon = e.geometry.coordinates[0];
   var centroid = path.centroid(e);
@@ -92,7 +92,7 @@ d3.json("nz2.json", function(error, nz) {
 
 var places = topojson.feature(nz, nz.objects.places).features;
   g.selectAll('text')
-    .on('click', clickToZoom);
+    .on('click', clickToCenter);
 
     console.log()
 });
