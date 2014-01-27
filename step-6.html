@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+/* CSS goes here. */
+ .subunit.NZN {
+  fill: #dcd;
+ }
+ .subunit.NZS {
+  fill: #cdd;
+ }
+ .subunit.NZA, .subunit.NZK,.subunit.TKL {
+  display: none;
+ }
+.place,
+.place-label {
+  fill: #444;
+}
+
+text {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+
+}
+
+</style>
+<title>D3 Mapping</title>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script>
+ 
+var width = 960,
+    height = 920;
+
+var projection = d3.geo.mercator()
+    .scale(2500)
+    .center([174.77,-41.28])
+    .translate([width / 2, height / 2]);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+var g = svg.append('g').attr("width", width)
+    .attr("height", height);
+var clickToZoom = function (e) {
+  var lat = e.geometry.coordinates[1];
+  var lon = e.geometry.coordinates[0];
+  var centroid = path.centroid(e);
+  x = centroid[0];
+  y = centroid[1];
+  k = 4;
+  g.transition()
+    .duration(750)
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")translate(" + -x + "," + -y + ")")
+    .style("stroke-width", 1.5 / k + "px");
+};
+
+
+d3.json("nz2.json", function(error, nz) {
+
+  g.selectAll(".subunit")
+      .data(topojson.feature(nz, nz.objects.subunits).features)
+    .enter().append("path")
+      .attr("class", function(d) { return "subunit " + d.id; })
+      .attr("d", path);
+  path.pointRadius(3);
+  g.append("path")
+      .datum(topojson.feature(nz, nz.objects.places))
+      .attr("d", path)
+      .attr("class", "place");
+
+
+  g.selectAll(".place-label")
+    .data(topojson.feature(nz, nz.objects.places).features)
+    .enter().append("text")
+      .attr("class", "place-label")
+      .attr("transform", function(d) { return "translate(" + projection(d.geometry.coordinates) + ")"; })
+      .attr("x", function(d) { return d.geometry.coordinates[0] > -1 ? 6 : -6; })
+      .attr("dy", ".35em")
+      .attr('data-lat', function (d) {
+        return d.geometry.coordinates[1];
+      })
+      .attr('data-lon', function (d) {
+        return d.geometry.coordinates[0];
+      })
+      .style("text-anchor", function(d) { return d.geometry.coordinates[0] > -1 ? "start" : "end"; })
+      .text(function(d) { return d.properties.name; })
+
+var places = topojson.feature(nz, nz.objects.places).features;
+  g.selectAll('text')
+    .on('click', clickToZoom);
+
+    console.log()
+});
+
+</script>
