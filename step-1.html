@@ -39,7 +39,6 @@ d3.json("nz.json", function(error, nz) {
 
 </script>
 <pre class="brush: js">
-<code>
   var width = 960,
     height = 1160;
 
@@ -47,8 +46,6 @@ var projection = d3.geo.mercator()
     //.scale(2500)
     .center([174.77,-41.28])
     .translate([width / 2, height / 2]);
-
-
 
 var path = d3.geo.path()
     .projection(projection);
@@ -62,7 +59,6 @@ d3.json("nz.json", function(error, nz) {
       .datum(topojson.feature(nz, nz.objects.subunits))
       .attr("d", path);
 });
-</code>
 </pre>
 
 

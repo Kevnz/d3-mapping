@@ -6,35 +6,26 @@
  
 </style>
 <title>D3 Mapping</title>
-<body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script src="http://fb.me/react-0.11.1.js"></script>
 <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
-<script>
- 
+<body>
 
-var width = 960,
-    height = 1160;
+<script type="text/jsx">
+/** @jsx React.DOM */
+
+var width = 480,
+    height = 580;
 
 var projection = d3.geo.mercator()
     .scale(2500)
     .center([174.77,-41.28])
     .translate([width / 2, height / 2]);
 
-
-
 var path = d3.geo.path()
-    .projection(projection);
+    .projection(projection); 
 
- 
-
-
-
-</script>
-
-<script type="text/jsx">
-/** @jsx React.DOM */
 var NzMap = React.createClass({
   render: function() {
     console.log()
@@ -46,9 +37,52 @@ var NzMap = React.createClass({
   }
 });
 d3.json("nz.json", function(error, nz) {
- 
-  React.renderComponent(<NzMap width="960" height="1160" data={nz} />, document.body);
+    React.renderComponent(<NzMap width="960" height="1160" data={nz} />, 
+      document.body);
 });
 
 
 </script>
+<pre class="brush: js">
+var width = 480,
+    height = 580;
+
+var projection = d3.geo.mercator()
+    .scale(2500)
+    .center([174.77,-41.28])
+    .translate([width / 2, height / 2]);
+
+var path = d3.geo.path()
+    .projection(projection); 
+
+var NzMap = React.createClass({
+  render: function() {
+    console.log()
+
+    var nz = topojson.feature(this.props.data, this.props.data.objects.subunits);
+    return this.transferPropsTo(<svg >
+      <path d={path(nz)} />
+    </svg>);
+  }
+});
+d3.json("nz.json", function(error, nz) {
+    React.renderComponent(<NzMap width="960" height="1160" data={nz} />, 
+      document.body);
+});
+
+</pre>
+<!-- Include required JS files -->
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+ 
+<!-- Include *at least* the core style and default theme -->
+<link href="css/shCore.css" rel="stylesheet" type="text/css" />
+<link href="css/shThemeDefault.css" rel="stylesheet" type="text/css" />
+ 
+ 
+<!-- Finally, to actually run the highlighter, you need to include this JS on your page -->
+<script type="text/javascript">
+     SyntaxHighlighter.all()
+</script>
+
+</body>
