@@ -38,6 +38,7 @@ d3.json("nz.json", function(error, nz) {
 });
 
 </script>
+<pre class="brush: js">
 <code>
   var width = 960,
     height = 1160;
@@ -62,4 +63,20 @@ d3.json("nz.json", function(error, nz) {
       .attr("d", path);
 });
 </code>
+</pre>
+
+
+<!-- Include required JS files -->
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+ 
+<!-- Include *at least* the core style and default theme -->
+<link href="css/shCore.css" rel="stylesheet" type="text/css" />
+<link href="css/shThemeDefault.css" rel="stylesheet" type="text/css" />
+ 
+ 
+<!-- Finally, to actually run the highlighter, you need to include this JS on your page -->
+<script type="text/javascript">
+     SyntaxHighlighter.all()
+</script>
 </body>
