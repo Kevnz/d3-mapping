@@ -9,8 +9,7 @@
 <link rel="stylesheet" href="css/codemirror.css">
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
-<script src="http://fb.me/react-0.11.1.js"></script>
-<script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
+<script src="http://fb.me/react-0.11.1.js"></script> 
 
 
 <script src="js/codemirror.js"></script>
@@ -42,42 +41,12 @@ var NzMap = React.createClass({
   }
 });
 d3.json("nz.json", function(error, nz) {
-    React.renderComponent(<NzMap width="960" height="1160" data={nz} />, 
+    React.renderComponent(<NzMap width={width} height={height} data={nz} />, 
       document.body);
 });
 
 </textarea>
-<script type="text/jsx">
-/** @jsx React.DOM */
-
-var width = 480,
-    height = 580;
-
-var projection = d3.geo.mercator()
-    .scale(2500)
-    .center([174.77,-41.28])
-    .translate([width / 2, height / 2]);
-
-var path = d3.geo.path()
-    .projection(projection); 
-
-var NzMap = React.createClass({
-  render: function() {
-    console.log()
-
-    var nz = topojson.feature(this.props.data, this.props.data.objects.subunits);
-    return this.transferPropsTo(<svg >
-      <path d={path(nz)} />
-    </svg>);
-  }
-});
-d3.json("nz.json", function(error, nz) {
-    React.renderComponent(<NzMap width="480" height="580" data={nz} />, 
-      document.getElelemtById('map'));
-});
-
-
-</script>
+ 
 
 <!-- Include required JS files -->
  
@@ -91,5 +60,6 @@ d3.json("nz.json", function(error, nz) {
     lineNumbers: true 
   });
 </script>
+<script type="text/javascript" src="react-map.js"></script>
 
 </body>
