@@ -24,5 +24,5 @@ var NzMap = React.createClass({displayName: 'NzMap',
  
 d3.json("nz.json", function(error, nz) {
     React.renderComponent(NzMap({width: "480", height: "580", data: nz}), 
-      document.getElelemtById('map'));
+      document.getElementById('map'));
 });
