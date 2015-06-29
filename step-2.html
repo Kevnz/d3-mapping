@@ -18,11 +18,10 @@
 
 </script>
 <body>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://d3js.org/topojson.v1.min.js"></script>
-<script>
- 
-
+  <div class="pure-g">
+    <div class="pure-u-1-2"><div id="map"></div></div>
+    <div class="pure-u-1-2">
+<textarea id="code" name="code">
 var width = 960,
     height = 1160;
 
@@ -45,5 +44,41 @@ d3.json("nz.json", function(error, nz) {
       .datum(topojson.feature(nz, nz.objects.subunits))
       .attr("d", path);
 });
+</textarea> 
+    </div> 
+</div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script>
+ 
+
+var width = 960,
+    height = 1160;
+
+var projection = d3.geo.mercator()
+    .scale(2500)
+    .center([174.77,-41.28])
+    .translate([width / 2, height / 2]);
+
+
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("#map").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+d3.json("nz.json", function(error, nz) {
+  svg.append("path")
+      .datum(topojson.feature(nz, nz.objects.subunits))
+      .attr("d", path);
+});
 
 </script>
+<script type="text/javascript">
+       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+    lineNumbers: true 
+  });
+</script>
+</body>
