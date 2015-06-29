@@ -24,6 +24,10 @@ text {
 }
 
 </style>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+<link rel="stylesheet" href="css/codemirror.css">
+<script src="js/codemirror.js"></script>
+<script src="mode/javascript/javascript.js"></script>
 <title>D3 Mapping</title>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -36,6 +40,48 @@ text {
 
 </script>
 <body>
+  <div class="pure-g">
+    <div class="pure-u-1-2"><div id="map"></div></div>
+    <div class="pure-u-1-2">
+<textarea id="code" name="code">
+//boilerplate width and height of map
+var width = 960,
+    height = 920;
+//mercator projection
+var projection = d3.geo.mercator()
+    .scale(2500)
+    .center([174.77,-41.28])
+    .translate([width / 2, height / 2]);
+
+//path object using the projection
+var path = d3.geo.path()
+    .projection(projection);
+
+//create svg element and append it to container
+// with the width and height properties
+var svg = d3.select("#map").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+//append a svg group into the svg document
+var g = svg.append('g').attr("width", width)
+    .attr("height", height);
+ 
+//get the json data for this map
+d3.json("nz2.json", function(error, nz) {
+//select, or in this case create an element and apply class subunit
+  g.selectAll(".subunit")
+      .data(topojson.feature(nz, nz.objects.subunits).features)
+      .enter()
+      .append("path")
+      .attr("class", function(d) { return "subunit " + d.id; })
+      .attr("d", path);
+  //set the path point radius
+  path.pointRadius(3);
+
+});
+</textarea> 
+    </div> 
+</div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script>
